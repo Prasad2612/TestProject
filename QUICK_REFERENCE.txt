@@ -1,0 +1,104 @@
+# 🎯 QUICK REFERENCE - HOW TO RUN YOUR WORD TO PDF CONVERTER
+
+## Your Files
+- **To Convert:** `C:\Users\pmspp\AppData\Roaming\JetBrains\IntelliJIdea2025.2\extensions\PRODATA\PBP_CV.docx`
+- **Will Create:** `C:\Users\pmspp\AppData\Roaming\JetBrains\IntelliJIdea2025.2\extensions\PRODATA\PBP_CV.pdf`
+
+---
+
+## 🚀 EASIEST WAY - IntelliJ IDEA
+
+1. **Open IntelliJ IDEA**
+2. **Navigate to:** `src/main/java/com/java/ConvertDocToPdf.java`
+3. **Right-click** on the file
+4. **Select:** "Run 'ConvertDocToPdf.main()'"
+5. ✅ Done! PDF will be created
+
+---
+
+## 💻 WINDOWS BATCH SCRIPT
+
+**Double-click:** `run_converter.bat` (in project root)
+
+That's it! The script will do everything automatically.
+
+---
+
+## ⚡ COMMAND LINE (CMD/PowerShell)
+
+```bash
+cd C:\A\Projects\TestProject
+mvn clean compile
+mvn exec:java -Dexec.mainClass="com.java.ConvertDocToPdf"
+```
+
+---
+
+## 🔄 ALTERNATIVE - Create Executable JAR
+
+```bash
+cd C:\A\Projects\TestProject
+mvn clean package
+java -jar target/word-to-pdf-converter.jar
+```
+
+---
+
+## ✅ SUCCESS INDICATORS
+
+When it works, you'll see:
+```
+╔════════════════════════════════════════════════════════════╗
+║         Word Document to PDF Converter                      ║
+╚════════════════════════════════════════════════════════════╝
+
+Input File  : C:\Users\pmspp\AppData\Roaming\JetBrains\...
+Output File : C:\Users\pmspp\AppData\Roaming\JetBrains\...
+
+✓ Conversion completed successfully!
+PDF saved to: C:\Users\pmspp\...
+
+╔════════════════════════════════════════════════════════════╗
+║              ✓ Conversion Completed Successfully           ║
+╚════════════════════════════════════════════════════════════╝
+```
+
+---
+
+## 📋 BEFORE YOU START
+
+- ✅ Java 21+ installed? → `java -version`
+- ✅ Maven installed? → `mvn -version`
+- ✅ Word file exists? → Check `C:\Users\pmspp\AppData\Roaming\JetBrains\IntelliJIdea2025.2\extensions\PRODATA\PBP_CV.docx`
+
+---
+
+## ❌ QUICK FIXES
+
+| Problem | Fix |
+|---------|-----|
+| "Maven not found" | Install Maven: https://maven.apache.org/download.cgi |
+| "File not found" | Check Word file exists in PRODATA folder |
+| "Build failed" | Run: `mvn clean compile` |
+| "Permission denied" | Run as Administrator |
+
+---
+
+## 📁 CREATED FILES
+
+- ✅ `ConvertDocToPdf.java` - Main program
+- ✅ `WordToPDFConverter.java` - Converter service
+- ✅ `WordDocumentReader.java` - Word reader
+- ✅ `PDFGenerator.java` - PDF generator
+- ✅ `run_converter.bat` - Batch script
+- ✅ `run_converter.ps1` - PowerShell script
+- ✅ `pom.xml` - Maven configuration (updated)
+
+---
+
+## 🎉 THAT'S IT!
+
+Choose any method above and run it. Your PDF will be created in the same folder as your Word document!
+
+For detailed steps, see `SETUP_AND_RUN.md` or `README.md`
+

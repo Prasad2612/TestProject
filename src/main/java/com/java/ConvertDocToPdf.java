@@ -17,7 +17,7 @@ public class ConvertDocToPdf {
         // Output PDF path - will be saved in the same directory as input
 //        String outputDir = "C:\\Users\\pmspp\\AppData\\Roaming\\JetBrains\\IntelliJIdea2025.2\\extensions\\PRODATA\\";
         String outputDir = "C:\\A\\Projects\\TestProject\\src\\test\\";
-        String pdfFilePath = outputDir + "PBP_CV.pdf";
+        String pdfFilePath = outputDir + "PBP_CV_New.pdf";
 
         // PDF title
         String pdfTitle = "CV Document - Converted from Word";

@@ -6,7 +6,6 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.TextAlignment;
-import com.itextpdf.layout.properties.Leading;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +19,6 @@ public class PDFGenerator {
     // PDF Generation constants
     private static final float DEFAULT_FONT_SIZE = 11f;
     private static final float TITLE_FONT_SIZE = 16f;
-    private static final float LEADING_SIZE = 14f;
 
     /**
      * Generates a PDF file from a list of text lines with formatting
@@ -60,11 +58,10 @@ public class PDFGenerator {
             for (String line : content) {
                 if (line == null || line.trim().isEmpty()) {
                     // Preserve empty lines for formatting
-                    doc.add(new Paragraph(" ").setLeading(new Leading(Leading.MULTIPLIED, 0.5f)));
+                    doc.add(new Paragraph(" ").setMarginBottom(3));
                 } else {
                     Paragraph paragraph = new Paragraph(line)
                             .setFontSize(DEFAULT_FONT_SIZE)
-                            .setLeading(new Leading(Leading.MULTIPLIED, 1.15f))
                             .setMarginBottom(6);
                     doc.add(paragraph);
                 }
@@ -152,6 +149,8 @@ public class PDFGenerator {
             }
         }
 
+        // Use try-with-resources to ensure wordDoc is properly closed
+        org.apache.poi.xwpf.usermodel.XWPFDocument wordDoc = null;
         try (PdfWriter writer = new PdfWriter(pdfOutputPath);
              PdfDocument pdfDoc = new PdfDocument(writer);
              Document doc = new Document(pdfDoc)) {
@@ -168,8 +167,7 @@ public class PDFGenerator {
             }
 
             // Process Word document with formatting preservation
-            org.apache.poi.xwpf.usermodel.XWPFDocument wordDoc =
-                WordDocumentReader.getDocumentForAdvancedProcessing(wordFilePath);
+            wordDoc = WordDocumentReader.getDocumentForAdvancedProcessing(wordFilePath);
 
             // Read paragraphs with formatting
             for (org.apache.poi.xwpf.usermodel.XWPFParagraph wordPara : wordDoc.getParagraphs()) {
@@ -177,11 +175,10 @@ public class PDFGenerator {
 
                 if (paraText == null || paraText.trim().isEmpty()) {
                     // Preserve empty lines
-                    doc.add(new Paragraph(" ").setLeading(new Leading(Leading.MULTIPLIED, 0.5f)));
+                    doc.add(new Paragraph(" ").setMarginBottom(3));
                 } else {
                     Paragraph pdfPara = new Paragraph(paraText)
                             .setFontSize(DEFAULT_FONT_SIZE)
-                            .setLeading(new Leading(Leading.MULTIPLIED, 1.15f))
                             .setMarginBottom(6);
                     doc.add(pdfPara);
                 }
@@ -191,23 +188,33 @@ public class PDFGenerator {
             for (org.apache.poi.xwpf.usermodel.XWPFTable wordTable : wordDoc.getTables()) {
                 doc.add(new Paragraph("\n")); // Space before table
 
-                int cols = wordTable.getRows().get(0).getTableCells().size();
-                Table pdfTable = new Table(cols);
+                // Check if table has rows before accessing
+                if (wordTable.getRows() != null && !wordTable.getRows().isEmpty()) {
+                    int cols = wordTable.getRows().get(0).getTableCells().size();
+                    Table pdfTable = new Table(cols);
 
-                for (org.apache.poi.xwpf.usermodel.XWPFTableRow row : wordTable.getRows()) {
-                    for (org.apache.poi.xwpf.usermodel.XWPFTableCell cell : row.getTableCells()) {
-                        String cellText = cell.getText();
-                        Paragraph cellPara = new Paragraph(cellText != null ? cellText : "")
-                                .setFontSize(DEFAULT_FONT_SIZE);
-                        pdfTable.addCell(cellPara);
+                    for (org.apache.poi.xwpf.usermodel.XWPFTableRow row : wordTable.getRows()) {
+                        for (org.apache.poi.xwpf.usermodel.XWPFTableCell cell : row.getTableCells()) {
+                            String cellText = cell.getText();
+                            Paragraph cellPara = new Paragraph(cellText != null ? cellText : "")
+                                    .setFontSize(DEFAULT_FONT_SIZE);
+                            pdfTable.addCell(cellPara);
+                        }
                     }
-                }
 
-                doc.add(pdfTable);
+                    doc.add(pdfTable);
+                }
                 doc.add(new Paragraph("\n")); // Space after table
             }
-
-            wordDoc.close();
+        } finally {
+            // Ensure wordDoc is closed even if an exception occurs
+            if (wordDoc != null) {
+                try {
+                    wordDoc.close();
+                } catch (IOException e) {
+                    System.err.println("Warning: Failed to close Word document: " + e.getMessage());
+                }
+            }
         }
     }
 }

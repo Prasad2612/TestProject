@@ -7,7 +7,7 @@ import static java.lang.System.in;
 
 public class MapPhoneBookTest {
     public static void main(String[] args) throws IOException {
-        /* Enter your code here. Read input from STDIN. Ppoutrint output to STDOUT. Your class should be named Solution. */
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
 
         Scanner input = new Scanner(System.in);
         int n = input.nextInt();

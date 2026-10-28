@@ -1,8 +1,26 @@
 package hacker.strings.todo;
 
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
 public class DuplicateWordsRegEx {
     public static void main(String[] args) {
 
+        String regex = "(?i)\\b(\\w+)(\\s+\\1\\b)+"; // Write a RegEx that will match any repeated word
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+
+        Scanner input = new Scanner(System.in);
+
+        int numSentences =Integer.parseInt(input.nextLine()) ;
+
+        while(numSentences -->0){
+            String s = input.nextLine();
+            String result = pattern.matcher(s).replaceAll("$1"); // Write the two necessary arguments for replaceAll
+            System.out.println(result);
+            numSentences--;
+        }
+    System.out.println(input);
+        input.close();
     }
 }
 
@@ -11,21 +29,23 @@ public class DuplicateWordsRegEx {
 
 To solve this challenge, complete the following three lines:
 
-Write a RegEx that will match any repeated word.
-Complete the second compile argument so that the compiled RegEx is case-insensitive.
-Write the two necessary arguments for replaceAll such that each repeated word is replaced with the very first instance the word found in the sentence. It must be the exact first occurrence of the word, as the expected output is case-sensitive.
+1) Write a RegEx that will match any repeated word.
+2) Complete the second compile argument so that the compiled RegEx is case-insensitive.
+3) Write the two necessary arguments for replaceAll such that each repeated word is replaced with the very first instance the word found in the sentence. It must be the exact first occurrence of the word, as the expected output is case-sensitive.
 Note: This challenge uses a custom checker; you will fail the challenge if you modify anything other than the three locations that the comments direct you to complete. To restore the editor's original stub code, create a new buffer by clicking on the branch icon in the top left of the editor.
 
 Input Format
 
 The following input is handled for you the given stub code:
 
-The first line contains an integer, , denoting the number of sentences.
-Each of the  subsequent lines contains a single sentence consisting of English alphabetic letters and whitespace characters.
+The first line contains an integer, n, denoting the number of sentences.
+Each of the n subsequent lines contains a single sentence consisting of English alphabetic letters and whitespace characters.
 
 Constraints
 
-Each sentence consists of at most  English alphabetic letters and whitespaces.
+* Each sentence consists of at most  English alphabetic letters and whitespaces.
+* 1<=n<=100
+
 Output Format
 
 Stub code in the editor prints the sentence modified by the replaceAll line to stdout. The modified string must be a modified version of the initial sentence where all repeat occurrences of each word are removed.

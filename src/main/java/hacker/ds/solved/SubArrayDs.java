@@ -1,9 +1,25 @@
-package hacker.ds;
+package hacker.ds.solved;
 
 public class SubArrayDs {
     public static void main(String[] args) {
         /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
-
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+       int n = scanner.nextInt();
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = scanner.nextInt();
+        }
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            int sum = 0;
+            for (int j = i; j < n; j++) {
+                sum += arr[j];
+                if (sum < 0) {
+                    count++;
+                }
+            }
+        }
+        System.out.println(count);
 
 
     }
@@ -11,7 +27,8 @@ public class SubArrayDs {
 
 /*  We define the following:
 
-A subarray of an -element array is an array composed from a contiguous block of the original array's elements. For example, if , then the subarrays are , , , , , and . Something like  would not be a subarray as it's not a contiguous subsection of the original array.
+A subarray of an -element array is an array composed from a contiguous block of the original array's elements. For example, if array - [1, 2, 3],
+then the subarrays are ,[1], [2], [3] , , , , and . Something like  would not be a subarray as it's not a contiguous subsection of the original array.
 The sum of an array is the total sum of its elements.
 An array's sum is negative if the total sum of its elements is negative.
 An array's sum is positive if the total sum of its elements is positive.
@@ -48,5 +65,7 @@ There are nine negative subarrays of A: [1.-2,4,-5,1]
 7.[]=>1+-2+4+-5--2
 8.[]=>-2+4+-5+1--2
 9.[]=>1+-2+4+5-5+1=-1
+
+
 
  */

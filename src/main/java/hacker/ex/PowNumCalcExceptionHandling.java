@@ -16,10 +16,14 @@ public class PowNumCalcExceptionHandling {
         int p = sc.nextInt();
         try {
             list.add((int) myCalculator.power(n, p));
-          //  System.out.println(myCalculator.power(n, p));
+            System.out.println(myCalculator.power(n, p));
+         //   System.out.println(list);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+          //  System.out.println(e.getMessage());
             //throw new RuntimeException(e);
+        }
+        finally {
+           // System.out.println(" PRINT" + "myCalculator.power(n, p)");
         }
     }
     sc.close();
